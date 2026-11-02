@@ -32,6 +32,27 @@ live availability, final destinations, user agents, caching, TLS, SEO or future 
 Automated synthetic CLI tests ran on Linux/Python 3.12. Real HTTP captures,
 Windows and macOS have not been tested. MIT licensed; no support SLA.
 
+## Check capture provenance before preparing the CSV
+
+Vendor exports are not accepted directly: the observation header must be exactly
+`source,status,location`, in that order. Headers such as `Address,Status Code,Redirect URI`
+are rejected with exit 2 (`unexpected_header`). This is not a vendor-export importer.
+
+Before preparing input, verify that each status and Location came from the raw
+first HTTP response for that source, rather than a client-side upgrade or a
+followed final response. Retain the original capture, timestamp, tool configuration
+and any redirect-type metadata separately; the three-column CSV cannot carry or
+validate them. Renaming columns alone does not establish equivalent observations.
+
+For example, Screaming Frog documents that respecting HSTS can display a 307
+with HSTS-specific status and redirect-type labels for a client-side HTTPS upgrade.
+See its [HSTS configuration documentation](https://www.screamingfrog.co.uk/seo-spider/user-guide/configuration/#respect-hsts-policy).
+Such a displayed 307 is not evidence that the server returned an HTTP 307.
+If those labels are discarded, this comparator cannot distinguish that row from
+a supplied server-response 307: both produce `unexpected_status`. Review the
+capture context before diagnosing or changing a server. This guide does not
+establish compatibility with any particular vendor export or actual capture.
+
 ## Try a synthetic example
 
 Download this repository using **Code → Download ZIP**, extract it, and save
