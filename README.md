@@ -59,3 +59,5 @@ python3 -m unittest -v
 
 Bug reports can be filed through repository issues. Use minimal synthetic data;
 do not post private URLs, credentials or customer exports. No support SLA.
+
+For a worked correction sequence, see [Review a redirect CSV before import](REVIEW-MAP.md).
