@@ -1,0 +1,5 @@
+source,target
+https://example.org/old,https://example.org/middle
+https://example.org/middle,https://example.org/new
+https://example.org/loop-a,https://example.org/loop-b
+https://example.org/loop-b,https://example.org/loop-a
